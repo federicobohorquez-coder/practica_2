@@ -12,8 +12,10 @@ int main() {
         cout << "1. Problema 2" << endl;
         cout <<"2. problema 4" << endl;
         cout <<"3. problema 6" << endl;
-        cout <<"4. problema 7" << endl;
-        cout <<"5. problema 9" << endl;
+        cout <<"4. problema 8" << endl;
+        cout <<"5. problema 10" << endl;
+        cout <<"6. problema 12" << endl;
+        cout <<"7. problema 14" << endl;
         cout << "0. Salir" << endl;
         cout << "Ingrese una opcion: ";
         cin >> opcion;
@@ -76,24 +78,69 @@ int main() {
             break;
         }
         case 5:{
+            char romano[25];
+
+            cout << "\nIngrese un numero en sistema romano: ";
+            cin >> romano;
+
+            int arabigo = romanoAArabigo(romano);
+
+            cout << "El numero ingresado fue: " << romano << endl;
+            cout << "Que corresponde a: " << arabigo << "." << endl;
+            break;
+        }
+        case 6:{
             int n = 0;
-            const int MAX_TAM = 100;
-            char original[MAX_TAM];
-            int sumaResultante = 0;
-
-            cout << "\nIngrese la cifra n: ";
+            cout << "\nIngrese la dimension n de la matriz (maximo 5): ";
             cin >> n;
-            cout << "Ingrese la cadena de caracteres numericos: ";
-            cin >> original;
 
-            sumarBloques(original, &n, &sumaResultante);
+            if (n <= 0) {
+                cout << "La dimension debe ser mayor que 0." << endl;
+                break;
+            }
 
-            cout << "Original: " << original << "." << endl;
-            cout << "Suma: " << sumaResultante << "." << endl;
+            // Arreglo contiguo de tamaño n*n mapeado linealmente en memoria
+            int matriz[25];
+
+            cout << "Ingrese los elementos de la matriz:" << endl;
+            leerMatriz(matriz, n);
+
+            cout << "\nMatriz ingresada:" << endl;
+            imprimirMatriz(matriz, n);
+
+            if (esCuadradoMagico(matriz, n)) {
+                cout << "\nLa matriz ES un cuadrado magico." << endl;
+            } else {
+                cout << "\nLa matriz NO es un cuadrado magico." << endl;
+            }
+            break;
+        }
+        case 7:{
+            int original[25];
+            int rotada[25];
+
+            llenarMatriz5x5(original);
+
+            cout << "\nMatriz Original:" << endl;
+            imprimirMatriz5x5(original);
+
+            rotar90(original, rotada);
+            cout << "Matriz Rotada 90 grados:" << endl;
+            imprimirMatriz5x5(rotada);
+
+            rotar180(original, rotada);
+            cout << "Matriz Rotada 180 grados:" << endl;
+            imprimirMatriz5x5(rotada);
+
+            rotar270(original, rotada);
+            cout << "Matriz Rotada 270 grados:" << endl;
+            imprimirMatriz5x5(rotada);
+
             break;
 
 
         }
+
         case 0:
             cout << "Saliendo del programa..." << endl;
             break;
