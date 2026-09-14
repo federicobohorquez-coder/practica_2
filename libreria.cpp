@@ -1,41 +1,76 @@
 #include "libreria_1.h"
+#include <iostream>
+#include <cstdlib>
 
-void calcularDesglose(const int *monto, const int *denominaciones, int *cantidades, const int *tamano, int *faltante) {
-    int restante = *monto;
+using namespace std;
+//problema 2
+void generarArreglo(char *arreglo, const int *tamano) {
     int i = 0;
-
-    // Recorrido de denominaciones usando aritmetica de punteros explícita
     while (i < *tamano) {
-        int denomActual = *(denominaciones + i);
-
-        // Division entera para obtener cantidad de billetes/monedas
-        *(cantidades + i) = restante / denomActual;
-
-        restante = restante % denomActual;
-
+        *(arreglo + i) = 'A' + (rand() % 26);
         i = i + 1;
     }
-
-    *faltante = restante;
 }
 
-bool compararCadenas(const char *cadena1, const char *cadena2) {
+void imprimirArreglo(const char *arreglo, const int *tamano) {
     int i = 0;
+    while (i < *tamano) {
+        cout << *(arreglo + i);
+        i = i + 1;
+    }
+    cout << endl << endl;
+}
 
-    // Recorrido simultáneo hasta encontrar el fin de alguna cadena
-    while (*(cadena1 + i) != '\0' && *(cadena2 + i) != '\0') {
-        if (*(cadena1 + i) != *(cadena2 + i)) {
-            return false;
-        }
+void contarFrecuencias(const char *arreglo, const int *tamano) {
+    int conteo[26];
+
+    // Inicializar el arreglo de conteo en 0
+    int c = 0;
+    while (c < 26) {
+        *(conteo + c) = 0;
+        c = c + 1;
+    }
+
+    // Contar ocurrencias
+    int i = 0;
+    while (i < *tamano) {
+        char letra = *(arreglo + i);
+        int pos = letra - 'A';
+        int actual = *(conteo + pos);
+        *(conteo + pos) = actual + 1;
         i = i + 1;
     }
 
-    // Ambas cadenas deben finalizar en el mismo indice '\0'
-    if (*(cadena1 + i) == '\0' && *(cadena2 + i) == '\0') {
-        return true;
+    // Imprimir frecuencias de letras presentes
+    int k = 0;
+    while (k < 26) {
+        int cantidad = *(conteo + k);
+        if (cantidad > 0) {
+            char letra = 'A' + k;
+            cout << letra << ": " << cantidad << endl;
+        }
+        k = k + 1;
+    }
+}
+//prroblema 4
+int cadenaAEntero(const char *cadena) {
+    int resultado = 0;
+    int i = 0;
+
+    // Recorrer la cadena hasta encontrar el caracter nulo '\0'
+    while (*(cadena + i) != '\0') {
+        char caracter = *(cadena + i);
+
+        // Convertir de codigo ASCII a digito numerico (ej: '3' - '0' = 3)
+        int digito = caracter - '0';
+
+        // Desplazar las cifras decimales a la izquierda
+        resultado = resultado * 10 + digito;
+
+        i = i + 1;
     }
 
-    return false;
+    return resultado;
 }
 
 void enteroACadena(const int *numero, char *cadena) {

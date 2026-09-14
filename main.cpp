@@ -1,5 +1,7 @@
 #include <iostream>
 #include "libreria_1.h"
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -7,7 +9,7 @@ int main() {
     int opcion = -1;
 
     while (opcion != 0) {
-        cout << "1. Problema 1" << endl;
+        cout << "1. Problema 2" << endl;
         cout <<"2. problema 3" << endl;
         cout <<"3. problema 5" << endl;
         cout <<"4. problema 7" << endl;
@@ -17,46 +19,30 @@ int main() {
         cin >> opcion;
 
         switch (opcion) {
-        case 1: {
-            int monto = 0;
-            const int tamano = 10;
+        case 1:{
+            srand(time(0));
 
-            // Arreglo de denominaciones fijas
-            int denominaciones[10] = {50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50};
-            int cantidades[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-            int faltante = 0;
+            const int TAMANO = 200;
+            char arreglo[TAMANO];
 
-            cout << "\nIngrese la cantidad de dinero: ";
-            cin >> monto;
+            generarArreglo(arreglo, &TAMANO);
 
-            // Paso por direccion de memoria (&)
-            calcularDesglose(&monto, denominaciones, cantidades, &tamano, &faltante);
+            cout << "Arreglo generado:" << endl;
+            imprimirArreglo(arreglo, &TAMANO);
 
-            int i = 0;
-            while (i < tamano) {
-                cout << *(denominaciones + i) << " : " << *(cantidades + i) << endl;
-                i = i + 1;
-            }
-            cout << "Faltante: " << faltante << endl;
-            break;
+            cout << "Frecuencias de aparicion:" << endl;
+            contarFrecuencias(arreglo, &TAMANO);
         }
         case 2: {
-            const int MAX_TAM = 100;
-            char cadena1[MAX_TAM];
-            char cadena2[MAX_TAM];
+            char cadena[100];
 
-            cout << "\nIngrese la primera cadena: ";
-            cin >> cadena1;
-            cout << "Ingrese la segunda cadena: ";
-            cin >> cadena2;
+            cout << "Ingrese una cadena de caracteres numericos: ";
+            cin >> cadena;
 
-            // Se pasa la direccion base del arreglo como puntero
-            if (compararCadenas(cadena1, cadena2)) {
-                cout << "Resultado: Las cadenas son IGUALES." << endl;
-            } else {
-                cout << "Resultado: Las cadenas son DIFERENTES." << endl;
-            }
-            break;
+            int numero = cadenaAEntero(cadena);
+
+            cout << "El numero entero convertido es: " << numero << endl;
+
 
         }
         case 3:{

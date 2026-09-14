@@ -1,12 +1,13 @@
 #ifndef LIBRERIA_1_H
 #define LIBRERIA_1_H
 
+//problema 2
+void generarArreglo(char *arreglo, const int *tamano);
+void imprimirArreglo(const char *arreglo, const int *tamano);
+void contarFrecuencias(const char *arreglo, const int *tamano);
 
-// Punteros constantes para lectura de arreglos/monto; punteros simples para modificar resultados
-void calcularDesglose(const int *monto, const int *denominaciones, int *cantidades, const int *tamano, int *faltante);
-
-// Prototipo para comparar cadenas usando punteros constantes
-bool compararCadenas(const char *cadena1, const char *cadena2);
+//problema 4
+int cadenaAEntero(const char *cadena);
 
 // Convierte un número entero a una cadena de caracteres usando punteros
 void enteroACadena(const int *numero, char *cadena);
