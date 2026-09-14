@@ -72,78 +72,48 @@ int cadenaAEntero(const char *cadena) {
 
     return resultado;
 }
-
-void enteroACadena(const int *numero, char *cadena) {
-    int temp = *numero;
+//problema 6
+void convertirAMayusculas(const char *origen, char *destino) {
     int i = 0;
-    bool esNegativo = false;
+    while (*(origen + i) != '\0') {
+        char caracter = *(origen + i);
 
-    if (temp < 0) {
-        esNegativo = true;
-        temp = temp * -1;
-    }
-
-    // Caso especial para el cero
-    if (temp == 0) {
-        *(cadena + 0) = '0';
-        *(cadena + 1) = '\0';
-        return;
-    }
-
-    // Extracción de dígitos en orden inverso
-    while (temp > 0) {
-        int digito = temp % 10;
-        *(cadena + i) = digito + '0';
-        temp = temp / 10;
-        i = i + 1;
-    }
-
-    if (esNegativo) {
-        *(cadena + i) = '-';
-        i = i + 1;
-    }
-
-    *(cadena + i) = '\0'; // Terminador nulo de cadena
-
-    // Inversion de la cadena para obtener el orden correcto
-    int inicio = 0;
-    int fin = i - 1;
-    while (inicio < fin) {
-        char aux = *(cadena + inicio);
-        *(cadena + inicio) = *(cadena + fin);
-        *(cadena + fin) = aux;
-        inicio = inicio + 1;
-        fin = fin - 1;
-    }
-}
-
-void eliminarRepetidos(const char *cadenaOriginal, char *cadenaSinRepetidos) {
-    int i = 0; //recorre la cadena original
-    int j = 0; //escribir en la nueva cadena
-
-    while (*(cadenaOriginal + i) != '\0') {
-        char caracterActual = *(cadenaOriginal + i);
-        bool yaExiste = false;
-
-        // Verifica si el caracter ya fue guardado previamente en cadenaSinRepetidos
-        int k = 0;
-        while (k < j) {
-            if (*(cadenaSinRepetidos + k) == caracterActual) {
-                yaExiste = true;
-            }
-            k = k + 1;
+        // Si el caracter esta en el rango minúsculo ('a' - 'z')
+        if (caracter >= 'a' && caracter <= 'z') {
+            *(destino + i) = caracter - ('a' - 'A');
+        } else {
+            *(destino + i) = caracter;
         }
 
-        // Si el caracter no ha sido registrado, se copia a la nueva posicion
-        if (!yaExiste) {
-            *(cadenaSinRepetidos + j) = caracterActual;
+        i = i + 1;
+    }
+    // Agregar el caracter nulo de fin de cadena
+    *(destino + i) = '\0';
+}
+//problema 8
+void separarTextoYNumeros(const char *origen, char *texto, char *numeros) {
+    int i = 0;
+    int j = 0; // Apuntador/Indice para la cadena de texto
+    int k = 0; // Apuntador/Indice para la cadena de numeros
+
+    while (*(origen + i) != '\0') {
+        char caracter = *(origen + i);
+
+        // Si el caracter es un digito ASCII entre '0' y '9'
+        if (caracter >= '0' && caracter <= '9') {
+            *(numeros + k) = caracter;
+            k = k + 1;
+        } else {
+            *(texto + j) = caracter;
             j = j + 1;
         }
 
         i = i + 1;
     }
 
-    *(cadenaSinRepetidos + j) = '\0'; // Terminador nulo de cadena
+    // Cierre explicito de ambas cadenas en memoria RAM
+    *(texto + j) = '\0';
+    *(numeros + k) = '\0';
 }
 
 void sumarBloques(const char *cadena, const int *n, int *sumaTotal) {

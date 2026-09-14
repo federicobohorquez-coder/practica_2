@@ -9,11 +9,12 @@ void contarFrecuencias(const char *arreglo, const int *tamano);
 //problema 4
 int cadenaAEntero(const char *cadena);
 
-// Convierte un número entero a una cadena de caracteres usando punteros
-void enteroACadena(const int *numero, char *cadena);
+//problema 6
+void convertirAMayusculas(const char *origen, char *destino);
 
-// Elimina caracteres repetidos preservando el primer orden de aparicion
-void eliminarRepetidos(const char *cadenaOriginal, char *cadenaSinRepetidos);
+//problema 8
+void separarTextoYNumeros(const char *origen, char *texto, char *numeros);
+
 
 // Separa la cadena en bloques de n cifras, completa con ceros a la izquierda y suma sus valores
 void sumarBloques(const char *cadena, const int *n, int *sumaTotal);
