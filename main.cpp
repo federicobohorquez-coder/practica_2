@@ -16,28 +16,32 @@ int main() {
         cout <<"5. problema 10" << endl;
         cout <<"6. problema 12" << endl;
         cout <<"7. problema 14" << endl;
+        cout <<"8. problema 16" << endl;
+        cout <<"9. problema 18" << endl;
         cout << "0. Salir" << endl;
         cout << "Ingrese una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
         case 1:{
-            srand(time(0));
+            unsigned int semilla = 0;
+            cout << "\nIngrese un numero entero (semilla) para generar las letras: ";
+            cin >> semilla;
 
-            const int TAMANO = 200;
-            char arreglo[TAMANO];
+            int tamano = 200;
+            char arreglo[200];
 
-            generarArreglo(arreglo, &TAMANO);
+            generarArregloAleatorio(arreglo, tamano, &semilla);
 
-            cout << "Arreglo generado:" << endl;
-            imprimirArreglo(arreglo, &TAMANO);
+            cout << "\nArreglo generado de " << tamano << " letras:\n";
+            imprimirArreglo(arreglo, tamano);
 
-            cout << "Frecuencias de aparicion:" << endl;
-            contarFrecuencias(arreglo, &TAMANO);
+            cout << "\nFrecuencia de cada letra:\n";
+            contarFrecuenciaLetras(arreglo, tamano);
             break;
         }
         case 2: {
-            char cadena[100];
+            char cadena[25];
 
             cout << "Ingrese una cadena de caracteres numericos: ";
             cin >> cadena;
@@ -137,9 +141,43 @@ int main() {
             imprimirMatriz5x5(rotada);
 
             break;
-
-
         }
+
+        case 8:{
+            int n = 0;
+            cout << "\nIngrese la dimension n de la malla (nxn): ";
+            cin >> n;
+
+            if (n <= 0) {
+                cout << "La dimension debe ser mayor que 0." << endl;
+                break;
+            }
+
+            long long caminos = contarCaminos(&n);
+
+            cout << "Para una malla de " << n << "x" << n << " puntos hay " << caminos << " caminos." << endl;
+            break;
+        }
+        case 9:{
+
+            long long n = 0;
+            cout << "\nIngrese un numero n: ";
+            cin >> n;
+
+            // 10! = 3,628,800 permutaciones posibles
+            if (n <= 0 || n > 3628800) {
+                cout << "El numero n debe estar entre 1 y 3628800." << endl;
+                break;
+            }
+
+            char resultado[11];
+            obtenerPermutacionLexicografica(n, resultado);
+
+            cout << "La permutacion numero " << n << " es: " << resultado << "." << endl;
+            break;
+        }
+
+
 
         case 0:
             cout << "Saliendo del programa..." << endl;

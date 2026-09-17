@@ -4,52 +4,61 @@
 
 using namespace std;
 //problema 2
-void generarArreglo(char *arreglo, const int *tamano) {
+// Algoritmo LCG para sustituir rand()
+int generarNumeroAleatorio(unsigned int *semilla) {
+    *semilla = (*semilla * 1103515245 + 12345) % 2147483648;
+    int residuo = *semilla % 26;
+    if (residuo < 0) {
+        residuo = residuo * -1;
+    }
+    return residuo;
+}
+
+void generarArregloAleatorio(char *arreglo, int tamano, unsigned int *semilla) {
     int i = 0;
-    while (i < *tamano) {
-        *(arreglo + i) = 'A' + (rand() % 26);
+    while (i < tamano) {
+        int aleatorio = generarNumeroAleatorio(semilla);
+        *(arreglo + i) = 'A' + aleatorio;
         i = i + 1;
     }
 }
 
-void imprimirArreglo(const char *arreglo, const int *tamano) {
+void imprimirArreglo(const char *arreglo, int tamano) {
     int i = 0;
-    while (i < *tamano) {
+    while (i < tamano) {
         cout << *(arreglo + i);
         i = i + 1;
     }
-    cout << endl << endl;
+    cout << endl;
 }
 
-void contarFrecuencias(const char *arreglo, const int *tamano) {
+void contarFrecuenciaLetras(const char *arreglo, int tamano) {
     int conteo[26];
-
-    // Inicializar el arreglo de conteo en 0
-    int c = 0;
-    while (c < 26) {
-        *(conteo + c) = 0;
-        c = c + 1;
-    }
-
-    // Contar ocurrencias
     int i = 0;
-    while (i < *tamano) {
-        char letra = *(arreglo + i);
-        int pos = letra - 'A';
-        int actual = *(conteo + pos);
-        *(conteo + pos) = actual + 1;
+
+    // Inicializar frecuencias en 0
+    while (i < 26) {
+        *(conteo + i) = 0;
         i = i + 1;
     }
 
-    // Imprimir frecuencias de letras presentes
-    int k = 0;
-    while (k < 26) {
-        int cantidad = *(conteo + k);
-        if (cantidad > 0) {
-            char letra = 'A' + k;
-            cout << letra << ": " << cantidad << endl;
+    // Contar apariciones mediante punteros
+    i = 0;
+    while (i < tamano) {
+        char letra = *(arreglo + i);
+        int indice = letra - 'A';
+        *(conteo + indice) = *(conteo + indice) + 1;
+        i = i + 1;
+    }
+
+    // Imprimir frecuencias existentes
+    i = 0;
+    while (i < 26) {
+        if (*(conteo + i) > 0) {
+            char letra = 'A' + i;
+            cout << letra << ": " << *(conteo + i) << endl;
         }
-        k = k + 1;
+        i = i + 1;
     }
 }
 //prroblema 4
@@ -315,4 +324,67 @@ void rotar270(const int *origen, int *destino) {
         }
         i = i + 1;
     }
+}
+
+long long contarCaminos(const int *n) {
+    long long caminos = 1;
+    int i = 1;
+
+    // Formula combinatoria: (2n)! / (n! * n!)
+    // Se calcula iterativamente para evitar desbordamientos de memoria
+    while (i <= *n) {
+        caminos = caminos * (*n + i);
+        caminos = caminos / i;
+        i = i + 1;
+    }
+
+    return caminos;
+}
+
+long long calcularFactorial(int n) {
+    long long fact = 1;
+    int i = 1;
+    while (i <= n) {
+        fact = fact * i;
+        i = i + 1;
+    }
+    return fact;
+}
+
+void obtenerPermutacionLexicografica(long long n, char *resultado) {
+    char digitos[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    bool usados[10] = {false, false, false, false, false, false, false, false, false, false};
+
+    // Ajuste a indice base 0
+    long long k = n - 1;
+
+    int posRes = 0;
+    int posFact = 9; // Inicia en 9! hasta 0!
+
+    while (posFact >= 0) {
+        long long fact = calcularFactorial(posFact);
+        int indiceElegido = k / fact;
+        k = k % fact;
+
+        // Buscar el digito disponible en la posicion 'indiceElegido'
+        int contadorNoUsados = 0;
+        int j = 0;
+        while (j < 10) {
+            if (*(usados + j) == false) {
+                if (contadorNoUsados == indiceElegido) {
+                    *(resultado + posRes) = *(digitos + j);
+                    *(usados + j) = true;
+                    j = 10; // Terminar la busqueda
+                } else {
+                    contadorNoUsados = contadorNoUsados + 1;// lleva la cuenta de numeros no usados
+                }
+            }
+            j = j + 1;
+        }
+
+        posRes = posRes + 1;
+        posFact = posFact - 1;
+    }
+
+    *(resultado + posRes) = '\0';
 }

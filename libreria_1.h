@@ -2,9 +2,9 @@
 #define LIBRERIA_1_H
 
 //problema 2
-void generarArreglo(char *arreglo, const int *tamano);
-void imprimirArreglo(const char *arreglo, const int *tamano);
-void contarFrecuencias(const char *arreglo, const int *tamano);
+void generarArregloAleatorio(char *arreglo, int tamano, unsigned int *semilla);
+void imprimirArreglo(const char *arreglo, int tamano);
+void contarFrecuenciaLetras(const char *arreglo, int tamano);
 
 //problema 4
 int cadenaAEntero(const char *cadena);
@@ -30,5 +30,14 @@ void imprimirMatriz5x5(const int *matriz);
 void rotar90(const int *origen, int *destino);
 void rotar180(const int *origen, int *destino);
 void rotar270(const int *origen, int *destino);
+
+//problema 16
+long long contarCaminos(const int *n);
+
+//problema 18
+long long calcularFactorial(int n);
+void obtenerPermutacionLexicografica(long long n, char *resultado);
+
+
 
 #endif
